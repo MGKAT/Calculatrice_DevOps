@@ -1,0 +1,61 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main  # Déclenche le workflow sur chaque push à la branche principale
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest  # Utilise l'image Ubuntu la plus récente pour exécuter le job
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3  # Récupère le code du dépôt
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'  # Spécifiez la version de Node.js à utiliser
+
+      - name: Install dependencies
+        run: npm install  # Installe les dépendances
+
+      - name: Run tests
+        run: npm test  # Exécute les tests
+
+  docker:
+    runs-on: ubuntu-latest  # Utilise l'image Ubuntu la plus récente pour exécuter le job
+    needs: build-and-test  # Dépend du job de build-and-test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3  # Récupère le code du dépôt
+
+      - name: Build Docker image
+        run: |
+          docker build -t calculatrice-web .
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+      - name: Push Docker image
+        run: |
+          docker tag calculatrice-web ${{ secrets.DOCKER_HUB_USERNAME }}/calculatrice-web:latest
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/calculatrice-web:latest
+
+  deploy:
+    runs-on: ubuntu-latest  # Utilise l'image Ubuntu la plus récente pour exécuter le job
+    needs: docker  # Dépend du job docker
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3  # Récupère le code du dépôt
+
+      # Ajouter des étapes pour déployer l'image Docker, par exemple :
+      # - name: Deploy to Server
+      #   run: |
+      #     ssh user@yourserver 'docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/calculatrice-web:latest && docker run -d -p 80:80 ${{ secrets.DOCKER_HUB_USERNAME }}/calculatrice-web:latest'
+
