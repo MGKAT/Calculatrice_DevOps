@@ -46,3 +46,8 @@ jobs:
         run: |
           docker tag calculatrice-web ${{ secrets.DOCKER_HUB_USERNAME }}/calculatrice-web:latest
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/calculatrice-web:latest
+
+      - name: Debugging Secrets
+        run: |
+          echo "Docker Username: ${{ secrets.DOCKER_HUB_USERNAME }}"
+        
