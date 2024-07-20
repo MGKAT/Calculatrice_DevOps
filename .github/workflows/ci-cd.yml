@@ -6,24 +6,31 @@ on:
       - main
 
 jobs:
-  docker:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout le code
-        uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Installer les dépendances
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
         run: npm install
 
-      - name: Exécuter les tests
+      - name: Run tests
         run: npm test
 
-      - name: Construire l'image Docker
+      - name: Build Docker image
         run: docker build -t Calculatrice_DevOps .
 
-      - name: Se connecter à Docker Hub
-        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Login to Docker Hub
+        run: echo ${{ secrets.DOCKER_HUB_TOKEN }} | docker login -u mgkat --password-stdin
 
-      - name: Pousser l'image Docker
-        run: docker push Calculatrice_DevOps
+      - name: Push Docker image
+        run: |
+          docker tag Calculatrice_DevOps mgkat/calculatrice-web:latest
+          docker push mgkat/calculatrice-web:latest
