@@ -28,7 +28,7 @@ jobs:
         run: docker build -t Calculatrice_DevOps .
 
       - name: Login to Docker Hub
-        run: echo ${{ secrets.DOCKER_HUB_TOKEN }} | docker login -u mgkat --password-stdin
+        run: docker login -u mgkat -p ${{ secrets.DOCKER_HUB_TOKEN }}
 
       - name: Push Docker image
         run: |
