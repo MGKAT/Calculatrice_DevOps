@@ -38,10 +38,9 @@ jobs:
       - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
-
+          username: mgkat
+          password: Allal2002!
       - name: Push Docker image
         run: |
-          docker tag calculatrice-web ${{ secrets.DOCKER_HUB_USERNAME }}/calculatrice-web:latest
-          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/calculatrice-web:latest
+          docker tag calculatrice-web mgkat/calculatrice_web:latest
+          docker push mgkat/calculatrice_web:latest
