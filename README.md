@@ -16,18 +16,18 @@ Cette application est une calculatrice web simple construite avec HTML, CSS et J
 
 ## Installation
 
-# Clonez le dépôt sur votre machine locale:
+### Clonez le dépôt sur votre machine locale:
 ```sh
 git clone https://github.com/MGKAT/Calculatrice_DevOps.git
 cd Calculatrice_DevOps
 ```
 
-# Installez les dépendances Node.js:
+## Installez les dépendances Node.js:
 ```sh
 npm install
 ```
 
-# Exécution des Tests
+## Exécution des Tests
 ```sh
 npm test
 ```
@@ -45,9 +45,9 @@ docker run -d -p 8080:80 calculatrice-web
 ```
 L'application est accessible à l'adresse http://localhost:8080.
 
-## Pipeline CI/CD avec GitHub Actions
+# Pipeline CI/CD avec GitHub Actions
 
-# Configuration
+## Configuration
 
 Le fichier de pipeline CI/CD ci-cd.yml est situé dans le répertoire .github/workflows. Ce pipeline exécute les étapes suivantes à chaque push sur la branche main:
 
