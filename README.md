@@ -18,7 +18,7 @@ Cette application est une calculatrice web simple construite avec HTML, CSS et J
 
 # Clonez le dépôt sur votre machine locale:
 ```sh
-git clone https://github.com/mgkat/Calculatrice_DevOps.git
+git clone https://github.com/MGKAT/Calculatrice_DevOps.git
 cd Calculatrice_DevOps
 ```
 
